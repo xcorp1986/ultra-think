@@ -7,6 +7,9 @@
  * 所有配置参数都可以在生效前动态改变
  */
 
+use Think\Url\UrlCaseSensitivity;
+use Think\Url\UrlSchema;
+
 return [
     /* 应用设定 */
     // 应用类库是否使用命名空间
@@ -214,10 +217,10 @@ return [
 
     /* URL设置 */
     // 默认false 表示URL区分大小写 true则表示不区分大小写
-    'URL_CASE_INSENSITIVE'   => true,
+    'URL_CASE_INSENSITIVE'   => UrlCaseSensitivity::SENSITIVITY,
     // URL访问模式,可选参数0、1、2、3,代表以下四种模式：
     // 0 (普通模式); 1 (PATHINFO 模式); 2 (REWRITE  模式); 3 (兼容模式)  默认为PATHINFO 模式
-    'URL_MODEL'              => 1,
+    'URL_MODEL'              => UrlSchema::PATHINFO,
     // PATHINFO模式下，各参数之间的分割符号
     'URL_PATHINFO_DEPR'      => '/',
     // 用于兼容判断PATH_INFO 参数的SERVER替代变量列表
