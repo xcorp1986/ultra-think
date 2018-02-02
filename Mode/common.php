@@ -13,7 +13,7 @@ return [
     // 行为扩展定义
     'tags'   => [
         'app_init'        => [
-            'Behavior\BuildLiteBehavior', // 生成运行Lite文件
+//            'Behavior\BuildLiteBehavior', // 生成运行Lite文件
         ],
         'app_begin'       => [
             'Behavior\ReadHtmlCacheBehavior', // 读取静态缓存
