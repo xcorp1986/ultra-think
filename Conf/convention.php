@@ -24,8 +24,6 @@ return [
     'MULTI_MODULE'           => true,
     'MODULE_DENY_LIST'       => ['Common', 'Runtime'],
     'CONTROLLER_LEVEL'       => 1,
-    // 自动加载的应用类库层 关闭APP_USE_NAMESPACE后有效
-    'APP_AUTOLOAD_LAYER'     => 'Controller,Model',
 
     /* Cookie设置 */
     // Cookie有效期
