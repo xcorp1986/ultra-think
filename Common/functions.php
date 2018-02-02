@@ -3,9 +3,9 @@
 /**
  * 获取和设置配置参数 支持批量定义
  *
- * @param string|array $name    配置变量
- * @param mixed        $value   配置值
- * @param mixed        $default 默认值
+ * @param string|array $name 配置变量
+ * @param mixed $value 配置值
+ * @param mixed $default 默认值
  *
  * @return mixed
  */
@@ -54,7 +54,7 @@ function C($name = null, $value = null, $default = null)
 /**
  * 加载配置文件 支持格式转换 仅支持一级配置
  *
- * @param string $file  配置文件名
+ * @param string $file 配置文件名
  * @param string $parse 配置解析方法 有些格式需要用户自己解析
  *
  * @return array
@@ -102,7 +102,7 @@ if (!function_exists('yaml_parse_file')) {
 /**
  * 抛出异常处理
  *
- * @param string  $msg  异常消息
+ * @param string $msg 异常消息
  * @param int $code 异常代码 默认为0
  *
  * @throws Think\BaseException
@@ -126,9 +126,9 @@ function E($msg, $code = 0)
  * 其中统计内存使用需要 MEMORY_LIMIT_ON 常量为true才有效
  * </code>
  *
- * @param string         $start 开始标签
- * @param string         $end   结束标签
- * @param int|string $dec   小数位或者m
+ * @param string $start 开始标签
+ * @param string $end 结束标签
+ * @param int|string $dec 小数位或者m
  *
  * @return mixed
  */
@@ -168,8 +168,8 @@ function G($start, $end = '', $dec = 4)
 /**
  * 获取和设置语言定义(不区分大小写)
  *
- * @param string|array $name  语言变量
- * @param mixed        $value 语言值或者变量
+ * @param string|array $name 语言变量
+ * @param mixed $value 语言值或者变量
  *
  * @return mixed
  */
@@ -214,9 +214,9 @@ function L($name = null, $value = null)
 /**
  * 添加和获取页面Trace记录
  *
- * @param string  $value  变量
- * @param string  $label  标签
- * @param string  $level  日志级别
+ * @param string $value 变量
+ * @param string $label 标签
+ * @param string $level 日志级别
  * @param bool $record 是否记录日志
  *
  * @return void|array
@@ -268,7 +268,7 @@ function compile($filename)
  * 获取模版文件 格式 资源://模块@主题/控制器/操作
  *
  * @param string $template 模版资源地址
- * @param string $layer    视图层（目录）名称
+ * @param string $layer 视图层（目录）名称
  *
  * @return string
  */
@@ -330,10 +330,10 @@ function T($template = '', $layer = '')
  * I('get.'); 获取$_GET
  * </code>
  *
- * @param string $name    变量的名称 支持指定类型
- * @param mixed  $default 不存在的时候默认值
- * @param mixed  $filter  参数过滤方法
- * @param mixed  $datas   要获取的额外数据源
+ * @param string $name 变量的名称 支持指定类型
+ * @param mixed $default 不存在的时候默认值
+ * @param mixed $filter 参数过滤方法
+ * @param mixed $datas 要获取的额外数据源
  *
  * @return mixed
  */
@@ -502,7 +502,7 @@ function array_map_recursive($filter, $data)
  * echo N('read'); // 获取当前页面读取次数
  * </code>
  *
- * @param string  $key  标识位置
+ * @param string $key 标识位置
  * @param int $step 步进值
  * @param bool $save 是否保存结果
  *
@@ -530,7 +530,7 @@ function N($key, $step = 0, $save = false)
  * 字符串命名风格转换
  * type 0 将Java风格转换为C的风格 1 将C风格转换为Java的风格
  *
- * @param string  $name 字符串
+ * @param string $name 字符串
  * @param int $type 转换类型
  *
  * @return string
@@ -599,9 +599,9 @@ function file_exists_case($filename)
 /**
  * 导入所需的类库 同java的Import 本函数有缓存功能
  *
- * @param string $class   类库命名空间字符串
+ * @param string $class 类库命名空间字符串
  * @param string $baseUrl 起始路径
- * @param string $ext     导入的文件扩展名
+ * @param string $ext 导入的文件扩展名
  *
  * @return bool
  */
@@ -651,9 +651,9 @@ function import($class, $baseUrl = '', $ext = EXT)
  * 基于命名空间方式导入函数库
  * load('@.Util.Array')
  * @deprecated
- * @param string $name    函数库命名空间字符串
+ * @param string $name 函数库命名空间字符串
  * @param string $baseUrl 起始路径
- * @param string $ext     导入的文件扩展名
+ * @param string $ext 导入的文件扩展名
  *
  * @return void
  */
@@ -680,9 +680,9 @@ function load($name, $baseUrl = '', $ext = '.php')
  * 快速导入第三方框架类库 所有第三方框架的类库文件统一放到 系统的Vendor目录下面
  * @deprecated
  *
- * @param string $class   类库
+ * @param string $class 类库
  * @param string $baseUrl 基础目录
- * @param string $ext     类库后缀
+ * @param string $ext 类库后缀
  *
  * @return bool
  */
@@ -698,7 +698,7 @@ function vendor($class, $baseUrl = '', $ext = '.php')
 /**
  * 实例化模型类 格式 [资源://][模块/]模型
  *
- * @param string $name  资源地址
+ * @param string $name 资源地址
  * @param string $layer 模型层名称
  *
  * @return Think\Model
@@ -718,11 +718,7 @@ function D($name = '', $layer = '')
         $model = new $class(basename($name));
     } elseif (false === strpos($name, '/')) {
         // 自动加载公共模块下面的模型
-        if (!C('APP_USE_NAMESPACE')) {
-            import('Common/'.$layer.'/'.$class);
-        } else {
-            $class = '\\Common\\'.$layer.'\\'.$name.$layer;
-        }
+        $class = '\\Common\\'.$layer.'\\'.$name.$layer;
         $model = class_exists($class)
             ? new $class($name)
             : new Think\Model(
@@ -740,9 +736,9 @@ function D($name = '', $layer = '')
 /**
  * 实例化一个没有模型文件的Model
  *
- * @param string $name        Model名称 支持指定基础模型 例如 MongoModel:User
+ * @param string $name Model名称 支持指定基础模型 例如 MongoModel:User
  * @param string $tablePrefix 表前缀
- * @param mixed  $connection  数据库连接信息
+ * @param mixed $connection 数据库连接信息
  *
  * @return Think\Model
  */
@@ -767,8 +763,8 @@ function M($name = '', $tablePrefix = '', $connection = '')
  * 解析资源地址并导入类库文件
  * 例如 module/controller addon://module/behavior
  *
- * @param string  $name  资源地址 格式：[扩展://][模块/]资源名
- * @param string  $layer 分层名称
+ * @param string $name 资源地址 格式：[扩展://][模块/]资源名
+ * @param string $layer 分层名称
  * @param int $level 控制器层次
  *
  * @return string
@@ -786,18 +782,14 @@ function parse_res_name($name, $layer, $level = 1)
         $module = defined('MODULE_NAME') ? MODULE_NAME : '';
     }
     $array = explode('/', $name);
-    if (!C('APP_USE_NAMESPACE')) {
-        $class = parse_name($name, 1);
-        import($module.'/'.$layer.'/'.$class.$layer);
-    } else {
-        $class = $module.'\\'.$layer;
-        foreach ($array as $name) {
-            $class .= '\\'.parse_name($name, 1);
-        }
-        // 导入资源类库
-        if ($extend) { // 扩展资源
-            $class = $extend.'\\'.$class;
-        }
+
+    $class = $module.'\\'.$layer;
+    foreach ($array as $name) {
+        $class .= '\\'.parse_name($name, 1);
+    }
+    // 导入资源类库
+    if ($extend) { // 扩展资源
+        $class = $extend.'\\'.$class;
     }
 
     return $class.$layer;
@@ -814,18 +806,14 @@ function parse_res_name($name, $layer, $level = 1)
 function controller($name, $path = '')
 {
     $layer = C('DEFAULT_C_LAYER');
-    if (!C('APP_USE_NAMESPACE')) {
-        $class = parse_name($name, 1).$layer;
-        import(MODULE_NAME.'/'.$layer.'/'.$class);
-    } else {
-        $class = ($path ? basename(ADDON_PATH).'\\'.$path : MODULE_NAME).'\\'
-            .$layer;
-        $array = explode('/', $name);
-        foreach ($array as $name) {
-            $class .= '\\'.parse_name($name, 1);
-        }
-        $class .= $layer;
+
+    $class = ($path ? basename(ADDON_PATH).'\\'.$path : MODULE_NAME).'\\'
+        .$layer;
+    $array = explode('/', $name);
+    foreach ($array as $name) {
+        $class .= '\\'.parse_name($name, 1);
     }
+    $class .= $layer;
     if (class_exists($class)) {
         return new $class();
     } else {
@@ -836,8 +824,8 @@ function controller($name, $path = '')
 /**
  * 实例化多层控制器 格式：[资源://][模块/]控制器
  *
- * @param string  $name  资源地址
- * @param string  $layer 控制层名称
+ * @param string $name 资源地址
+ * @param string $layer 控制层名称
  * @param int $level 控制器层次
  *
  * @return Think\Controller|false
@@ -867,9 +855,9 @@ function A($name, $layer = '', $level = 0)
 /**
  * 远程调用控制器的操作方法 URL 参数格式 [资源://][模块/]控制器/操作
  *
- * @param string       $url   调用地址
- * @param string|array $vars  调用参数 支持字符串和数组
- * @param string       $layer 要调用的控制层名称
+ * @param string $url 调用地址
+ * @param string|array $vars 调用参数 支持字符串和数组
+ * @param string $layer 要调用的控制层名称
  *
  * @return mixed
  */
@@ -896,8 +884,8 @@ function R($url, $vars = [], $layer = '')
 /**
  * 处理标签扩展
  *
- * @param string $tag    标签名称
- * @param mixed  $params 传入参数
+ * @param string $tag 标签名称
+ * @param mixed $params 传入参数
  *
  * @return void
  */
@@ -982,8 +970,8 @@ function strip_whitespace($content)
 /**
  * 自定义异常处理
  *
- * @param string  $msg  异常消息
- * @param string  $type 异常类型 默认为Think\Exception
+ * @param string $msg 异常消息
+ * @param string $type 异常类型 默认为Think\Exception
  * @param int $code 异常代码 默认为0
  *
  * @return void
@@ -1001,9 +989,9 @@ function throw_exception($msg, $type = 'Think\\BaseException', $code = 0)
 /**
  * 浏览器友好的变量输出
  *
- * @param mixed   $var    变量
- * @param bool $echo   是否输出 默认为True 如果为false 则返回输出字符串
- * @param string  $label  标签 默认为空
+ * @param mixed $var 变量
+ * @param bool $echo 是否输出 默认为True 如果为false 则返回输出字符串
+ * @param string $label 标签 默认为空
  * @param bool $strict 是否严谨 默认为true
  *
  * @return void|string
@@ -1061,10 +1049,10 @@ function layout($layout)
 /**
  * URL组装 支持不同URL模式
  *
- * @param string         $url    URL表达式，格式：'[模块/控制器/操作#锚点@域名]?参数1=值1&参数2=值2...'
- * @param string|array   $vars   传入的参数，支持数组和字符串
+ * @param string $url URL表达式，格式：'[模块/控制器/操作#锚点@域名]?参数1=值1&参数2=值2...'
+ * @param string|array $vars 传入的参数，支持数组和字符串
  * @param string|boolean $suffix 伪静态后缀，默认为true表示获取配置值
- * @param bool        $domain 是否显示域名
+ * @param bool $domain 是否显示域名
  *
  * @return string
  */
@@ -1255,7 +1243,7 @@ function U($url = '', $vars = '', $suffix = true, $domain = false)
  *
  * @deprecated
  * @param string $name Widget名称
- * @param array  $data 传入的参数
+ * @param array $data 传入的参数
  *
  * @return void
  */
@@ -1286,9 +1274,9 @@ function is_ssl()
 /**
  * URL重定向
  *
- * @param string  $url  重定向的URL地址
+ * @param string $url 重定向的URL地址
  * @param int $time 重定向的等待时间（秒）
- * @param string  $msg  重定向前的提示信息
+ * @param string $msg 重定向前的提示信息
  *
  * @return void
  */
@@ -1320,8 +1308,8 @@ function redirect($url, $time = 0, $msg = '')
 /**
  * 缓存管理
  *
- * @param mixed $name    缓存名称，如果为数组表示进行缓存设置
- * @param mixed $value   缓存值
+ * @param mixed $name 缓存名称，如果为数组表示进行缓存设置
+ * @param mixed $value 缓存值
  * @param mixed $options 缓存参数
  *
  * @return mixed
@@ -1359,9 +1347,9 @@ function S($name, $value = '', $options = null)
 /**
  * 快速文件数据读取和保存 针对简单类型数据 字符串、数组
  *
- * @param string $name  缓存名称
- * @param mixed  $value 缓存值
- * @param string $path  缓存路径
+ * @param string $name 缓存名称
+ * @param mixed $value 缓存值
+ * @param string $path 缓存路径
  *
  * @return mixed
  */
@@ -1424,11 +1412,11 @@ function to_guid_string($mix)
 /**
  * XML编码
  *
- * @param mixed  $data     数据
- * @param string $root     根节点名
- * @param string $item     数字索引的子节点名
- * @param string $attr     根节点属性
- * @param string $id       数字索引子节点key转换的属性名
+ * @param mixed $data 数据
+ * @param string $root 根节点名
+ * @param string $item 数字索引的子节点名
+ * @param string $attr 根节点属性
+ * @param string $id 数字索引子节点key转换的属性名
  * @param string $encoding 数据编码
  *
  * @return string
@@ -1461,9 +1449,9 @@ function xml_encode(
 /**
  * 数据XML编码
  *
- * @param mixed  $data 数据
+ * @param mixed $data 数据
  * @param string $item 数字索引时的节点名称
- * @param string $id   数字索引key转换为的属性名
+ * @param string $id 数字索引key转换为的属性名
  *
  * @return string
  */
@@ -1490,8 +1478,8 @@ function data_to_xml($data, $item = 'item', $id = 'id')
 /**
  * session管理函数
  *
- * @param string|array $name  session名称 如果为数组则表示进行session设置
- * @param mixed        $value session值
+ * @param string|array $name session名称 如果为数组则表示进行session设置
+ * @param mixed $value session值
  *
  * @return mixed
  */
@@ -1647,9 +1635,9 @@ function session($name = '', $value = '')
 /**
  * Cookie 设置、获取、删除
  *
- * @param string $name   cookie名称
- * @param mixed  $value  cookie值
- * @param mixed  $option cookie参数
+ * @param string $name cookie名称
+ * @param mixed $value cookie值
+ * @param mixed $option cookie参数
  *
  * @return mixed
  */
@@ -1802,7 +1790,7 @@ function load_ext_file($path)
  * 获取客户端IP地址
  *
  * @param int $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
- * @param bool $adv  是否进行高级模式获取（有可能被伪装）
+ * @param bool $adv 是否进行高级模式获取（有可能被伪装）
  *
  * @return mixed
  */

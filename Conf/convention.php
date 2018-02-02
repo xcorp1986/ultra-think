@@ -12,8 +12,6 @@ use Think\Url\UrlSchema;
 
 return [
     /* 应用设定 */
-    // 应用类库是否使用命名空间
-    'APP_USE_NAMESPACE'      => true,
     // 是否开启子域名部署
     'APP_SUB_DOMAIN_DEPLOY'  => false,
     // 子域名部署规则
@@ -28,8 +26,6 @@ return [
     'CONTROLLER_LEVEL'       => 1,
     // 自动加载的应用类库层 关闭APP_USE_NAMESPACE后有效
     'APP_AUTOLOAD_LAYER'     => 'Controller,Model',
-    // 自动加载的路径 关闭APP_USE_NAMESPACE后有效
-    'APP_AUTOLOAD_PATH'      => '',
 
     /* Cookie设置 */
     // Cookie有效期

@@ -146,9 +146,6 @@ class [MODEL]Model extends Model {
                 [$module, $controller],
                 self::$controller
             );
-            if (!C('APP_USE_NAMESPACE')) {
-                $content = preg_replace('/namespace\s(.*?);/', '', $content, 1);
-            }
             $dir = dirname($file);
             if (!is_dir($dir)) {
                 mkdir($dir, 0755, true);
@@ -167,9 +164,6 @@ class [MODEL]Model extends Model {
                 [$module, $model],
                 self::$model
             );
-            if (!C('APP_USE_NAMESPACE')) {
-                $content = preg_replace('/namespace\s(.*?);/', '', $content, 1);
-            }
             $dir = dirname($file);
             if (!is_dir($dir)) {
                 mkdir($dir, 0755, true);
