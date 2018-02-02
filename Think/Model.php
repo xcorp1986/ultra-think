@@ -88,6 +88,7 @@ class Model
      * @param string $name 模型名称
      * @param string $tablePrefix 表前缀
      * @param mixed $connection 数据库连接信息
+     * @throws BaseException
      */
     public function __construct($name = '', $tablePrefix = '', $connection = '')
     {
