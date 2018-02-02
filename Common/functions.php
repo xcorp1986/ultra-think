@@ -702,6 +702,7 @@ function vendor($class, $baseUrl = '', $ext = '.php')
  * @param string $layer 模型层名称
  *
  * @return Think\Model
+ * @throws \Think\BaseException
  */
 function D($name = '', $layer = '')
 {
@@ -1313,6 +1314,7 @@ function redirect($url, $time = 0, $msg = '')
  * @param mixed $options 缓存参数
  *
  * @return mixed
+ * @throws \Think\BaseException
  */
 function S($name, $value = '', $options = null)
 {

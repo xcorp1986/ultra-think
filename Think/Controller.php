@@ -124,6 +124,7 @@ abstract class Controller
      * @param string $prefix 模板缓存前缀
      *
      * @return void
+     * @throws BaseException
      */
     protected function display(
         $templateFile = '',
@@ -160,6 +161,7 @@ abstract class Controller
      * @param string $prefix 模板缓存前缀
      *
      * @return mixed
+     * @throws BaseException
      */
     protected function show(
         $content,
@@ -234,6 +236,7 @@ abstract class Controller
      * @param mixed $ajax 是否为Ajax方式 当数字时指定跳转时间
      *
      * @return void
+     * @throws BaseException
      */
     protected function error($message = '', $jumpUrl = '', $ajax = false)
     {
@@ -249,8 +252,7 @@ abstract class Controller
      * @param int $status 状态
      * @param string $jumpUrl 页面跳转地址
      * @param mixed $ajax 是否为Ajax方式 当数字时指定跳转时间
-     *
-
+     * @throws BaseException
      */
     private function dispatchJump(
         $message,
@@ -358,6 +360,7 @@ abstract class Controller
      * @param string $message 提示信息
      * @param string $jumpUrl 页面跳转地址
      * @param mixed $ajax 是否为Ajax方式 当数字时指定跳转时间
+     * @throws BaseException
      */
     protected function success($message = '', $jumpUrl = '', $ajax = false)
     {
