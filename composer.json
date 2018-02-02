@@ -19,6 +19,15 @@
   "require": {
     "php": ">=5.6.0"
   },
+  "autoload": {
+    "files": [
+      "Bootstrap.php"
+    ],
+    "psr-4": {
+      "Think\\": "Think",
+      "Behavior\\": "Behavior"
+    }
+  },
   "support": {
     "issues": "https://github.com/xcorp1986/ultra-think/issues"
   }
