@@ -21,8 +21,8 @@
   },
   "autoload": {
     "files": [
-      "Bootstrap.php",
-      "Common/functions.php"
+      "Common/functions.php",
+      "Bootstrap.php"
     ],
     "psr-4": {
       "Think\\": "Think",
