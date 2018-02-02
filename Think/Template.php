@@ -21,7 +21,7 @@ class Template
     private $block = [];
 
     /**
-     * 构造函数
+     * Template constructor.
      */
     public function __construct()
     {
@@ -38,6 +38,10 @@ class Template
         $this->config['layout_item'] = C('TMPL_LAYOUT_ITEM');
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     private function stripPreg($str)
     {
         return str_replace(
@@ -61,6 +65,10 @@ class Template
         );
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function set($name, $value)
     {
         $this->tVar[$name] = $value;
@@ -70,10 +78,10 @@ class Template
      * 加载模板
      *
      * @param string $templateFile 模板文件
-     * @param array  $templateVar  模板变量
-     * @param string $prefix       模板标识前缀
+     * @param array $templateVar 模板变量
+     * @param string $prefix 模板标识前缀
      *
-     * @throws Exception
+     * @throws BaseException
      */
     public function fetch($templateFile, $templateVar, $prefix = '')
     {
@@ -86,10 +94,10 @@ class Template
      * 加载主模板并缓存
      *
      * @param string $templateFile 模板文件
-     * @param string $prefix       模板标识前缀
+     * @param string $prefix 模板标识前缀
      *
      * @return string
-     * @throws Exception
+     * @throws BaseException
      */
     public function loadTemplate($templateFile, $prefix = '')
     {
@@ -135,11 +143,10 @@ class Template
     /**
      * 编译模板文件内容
      *
-     * @access protected
-     *
      * @param mixed $tmplContent 模板内容
      *
      * @return string
+     * @throws BaseException
      */
     protected function compiler($tmplContent)
     {
@@ -165,11 +172,10 @@ class Template
     /**
      * 模板解析入口
      * 支持普通标签和TagLib解析 支持自定义标签库
-     *
-     *
      * @param string $content 要解析的模板内容
      *
      * @return string
+     * @throws BaseException
      */
     public function parse($content)
     {
@@ -228,6 +234,13 @@ class Template
         return $content;
     }
 
+    /**
+     * 解析模板中的include标签
+     * @param $content
+     * @param bool $extend
+     * @return mixed|null|string|string[]
+     * @throws BaseException
+     */
     protected function parseInclude($content, $extend = true)
     {
         // 解析继承
@@ -260,8 +273,13 @@ class Template
         return $content;
     }
 
-    // 检查PHP语法
-
+    /**
+     * 检查PHP语法
+     * 解析模板中的extend标签
+     * @param $content
+     * @return mixed|null|string|string[]
+     * @throws BaseException
+     */
     protected function parseExtend($content)
     {
         $begin = $this->config['taglib_begin'];
@@ -310,11 +328,11 @@ class Template
     /**
      * 分析XML属性
      *
-     * @access private
      *
      * @param string $attrs XML属性字符串
      *
      * @return array
+     * @throws BaseException
      */
     private function parseXmlAttrs($attrs)
     {
@@ -329,15 +347,11 @@ class Template
         return $array;
     }
 
-    // 解析模板中的include标签
-
     /**
      * 分析加载的模板文件并读取内容 支持多个模板文件读取
      *
-     * @access private
      *
-     * @param string $tmplPublicName 模板文件名
-     *
+     * @param $templateName
      * @return string
      */
     private function parseTemplateName($templateName)
@@ -366,8 +380,6 @@ class Template
         return $parseStr;
     }
 
-    // 解析模板中的extend标签
-
     /**
      * 模板变量获取和设置
      *
@@ -387,7 +399,6 @@ class Template
     /**
      * 替换继承模板中的block标签
      *
-     * @access private
      *
      * @param string $content 模板内容
      *
@@ -434,6 +445,11 @@ class Template
         }
     }
 
+    /**
+     * @param $content
+     * @return mixed
+     * @throws BaseException
+     */
     protected function parseLayout($content)
     {
         // 读取模板中的布局标签
@@ -471,12 +487,13 @@ class Template
     /**
      * 加载公共模板并缓存 和当前模板在同一路径，否则使用相对路径
      *
-     * @access private
      *
      * @param string $tmplPublicName 公共模板文件名
-     * @param array  $vars           要传递的变量列表
+     * @param array $vars 要传递的变量列表
      *
+     * @param $extend
      * @return string
+     * @throws BaseException
      */
     private function parseIncludeItem($tmplPublicName, $vars = [], $extend)
     {
@@ -491,6 +508,11 @@ class Template
         return $this->parseInclude($parseStr, $extend);
     }
 
+    /**
+     * @param $content
+     * @return null|string|string[]
+     * @throws BaseException
+     */
     protected function parsePhp($content)
     {
         if (ini_get('short_open_tag')) {
@@ -517,6 +539,7 @@ class Template
      * @param string $content 模板内容
      *
      * @return string|false
+     * @throws BaseException
      */
     public function getIncludeTagLib(& $content)
     {
@@ -541,10 +564,10 @@ class Template
     /**
      * TagLib库解析
      *
-     *
-     * @param string  $tagLib  要解析的标签库
-     * @param string  $content 要解析的模板内容
-     * @param boolean $hide    是否隐藏标签库前缀
+     * @todo 类型提示
+     * @param string $tagLib 要解析的标签库
+     * @param string $content 要解析的模板内容
+     * @param bool $hide 是否隐藏标签库前缀
      *
      * @return string
      */
@@ -619,9 +642,9 @@ class Template
      * 需要调用对应的标签库文件解析类
      *
      *
-     * @param object $tagLib  标签库对象实例
-     * @param string $tag     标签名
-     * @param string $attr    标签属性
+     * @param object $tagLib 标签库对象实例
+     * @param string $tag 标签名
+     * @param string $attr 标签属性
      * @param string $content 标签内容
      *
      * @return string|false
@@ -850,8 +873,8 @@ class Template
      * 格式 {$varname|function1|function2=arg1,arg2}
      *
      *
-     * @param string $name     变量名
-     * @param array  $varArray 函数列表
+     * @param string $name 变量名
+     * @param array $varArray 函数列表
      *
      * @return string
      */
@@ -866,11 +889,13 @@ class Template
             //模板函数过滤
             $fun = trim($args[0]);
             switch ($fun) {
-                case 'default':  // 特殊模板函数
+                // 特殊模板函数
+                case 'default':
                     $name = '(isset('.$name.') && ('.$name.' !== ""))?('.$name
                         .'):'.$args[1];
                     break;
-                default:  // 通用模板函数
+                // 通用模板函数
+                default:
                     if (!in_array($fun, $template_deny_funs)) {
                         if (isset($args[1])) {
                             if (strstr($args[1], '###')) {
@@ -894,7 +919,6 @@ class Template
     /**
      * 替换页面中的literal标签
      *
-     * @access private
      *
      * @param string $content 模板内容
      *
@@ -919,7 +943,6 @@ class Template
     /**
      * 还原被替换的literal标签
      *
-     * @access private
      *
      * @param string $tag literal标签序号
      *
@@ -941,9 +964,8 @@ class Template
     /**
      * 记录当前页面中的block标签
      *
-     * @access private
      *
-     * @param string $name    block名称
+     * @param string $name block名称
      * @param string $content 模板内容
      *
      * @return string

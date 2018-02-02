@@ -15,10 +15,11 @@ class Firebird extends Driver
      * 执行语句
      *
      *
-     * @param string  $str      sql指令
-     * @param boolean $fetchSql 不执行只是获取SQL
+     * @param string $str sql指令
+     * @param bool $fetchSql 不执行只是获取SQL
      *
      * @return mixed
+     * @throws \Think\BaseException
      */
     public function execute($str, $fetchSql = false)
     {
@@ -149,7 +150,7 @@ class Firebird extends Driver
      * limit
      *
      *
-     * @param $limit limit表达式
+     * @param mixed $limit limit表达式
      *
      * @return string
      */

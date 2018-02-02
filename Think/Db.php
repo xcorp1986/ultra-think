@@ -18,8 +18,8 @@ class Db
      *
      * @param mixed $config 连接配置
      *
-     * @return Object 返回数据库驱动类
-     * @throws Exception
+     * @return mixed|null 返回数据库驱动类
+     * @throws BaseException
      */
     public static function getInstance($config = [])
     {
@@ -116,7 +116,7 @@ class Db
      *
      * @param string $dsnStr
      *
-     * @return array
+     * @return array|bool
      */
     private static function parseDsn($dsnStr)
     {

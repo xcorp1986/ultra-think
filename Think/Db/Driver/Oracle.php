@@ -18,9 +18,9 @@ class Oracle extends Driver
      *
      *
      * @param string  $str      sql指令
-     * @param boolean $fetchSql 不执行只是获取SQL
+     * @param bool $fetchSql 不执行只是获取SQL
      *
-     * @return integer
+     * @return int
      */
     public function execute($str, $fetchSql = false)
     {
@@ -114,8 +114,8 @@ class Oracle extends Driver
 
     /**
      * 取得数据表的字段信息
-     *
-
+     * @param $tableName
+     * @return array
      */
     public function getFields($tableName)
     {
@@ -147,8 +147,8 @@ class Oracle extends Driver
 
     /**
      * 取得数据库的表信息（暂时实现取得用户表信息）
-     *
-
+     * @param string $dbName
+     * @return array
      */
     public function getTables($dbName = '')
     {
@@ -164,6 +164,7 @@ class Oracle extends Driver
     /**
      * limit
      *
+     * @param $limit
      * @return string
      */
     public function parseLimit($limit)
@@ -204,7 +205,7 @@ class Oracle extends Driver
     /**
      * 设置锁机制
      *
-     * @access protected
+     * @param bool $lock
      * @return string
      */
     protected function parseLock($lock = false)

@@ -6,10 +6,14 @@ namespace Think;
 /**
  * ThinkPHP路由解析类
  */
-class Route
+final class Route
 {
 
-    // 路由检测
+    /**
+     * 路由检测
+     * @return bool|void
+     * @throws \ReflectionException
+     */
     public static function check()
     {
         $depr = C('URL_PATHINFO_DEPR');
@@ -106,8 +110,11 @@ class Route
         return false;
     }
 
-    // 检测URL和规则路由是否匹配
-
+    /**
+     * 检测URL和规则路由是否匹配
+     * @param $url
+     * @return array
+     */
     private static function parseUrl($url)
     {
         $var = [];
@@ -133,9 +140,14 @@ class Route
         return $var;
     }
 
-    // 解析规范的路由地址
-    // 地址格式 [控制器/操作?]参数1=值1&参数2=值2...
-
+    /**
+     * 解析规范的路由地址
+     * 地址格式 [控制器/操作?]参数1=值1&参数2=值2...
+     * @param $closure
+     * @param array $var
+     * @return mixed
+     * @throws \ReflectionException
+     */
     private static function invokeRegx($closure, $var = [])
     {
         $reflect = new \ReflectionFunction($closure);
@@ -153,16 +165,21 @@ class Route
         return $reflect->invokeArgs($args);
     }
 
-    // 解析规则路由
-    // '路由规则'=>'[控制器/操作]?额外参数1=值1&额外参数2=值2...'
-    // '路由规则'=>array('[控制器/操作]','额外参数1=值1&额外参数2=值2...')
-    // '路由规则'=>'外部地址'
-    // '路由规则'=>array('外部地址','重定向代码')
-    // 路由规则中 :开头 表示动态变量
-    // 外部地址中可以用动态变量 采用 :1 :2 的方式
-    // 'news/:month/:day/:id'=>array('News/read?cate=1','status=1'),
-    // 'new/:id'=>array('/new.php?id=:1',301), 重定向
-
+    /**
+     * 解析规则路由
+     * '路由规则'=>'[控制器/操作]?额外参数1=值1&额外参数2=值2...'
+     * '路由规则'=>array('[控制器/操作]','额外参数1=值1&额外参数2=值2...')
+     * '路由规则'=>'外部地址'
+     * '路由规则'=>array('外部地址','重定向代码')
+     * 路由规则中 :开头 表示动态变量
+     * 外部地址中可以用动态变量 采用 :1 :2 的方式
+     * 'news/:month/:day/:id'=>array('News/read?cate=1','status=1'),
+     * 'new/:id'=>array('/new.php?id=:1',301), 重定向
+     * @param $matches
+     * @param $route
+     * @param $regx
+     * @return bool
+     */
     private static function parseRegex($matches, $route, $regx)
     {
         // 获取路由地址规则
@@ -217,15 +234,19 @@ class Route
         return true;
     }
 
-    // 解析正则路由
-    // '路由正则'=>'[控制器/操作]?参数1=值1&参数2=值2...'
-    // '路由正则'=>array('[控制器/操作]?参数1=值1&参数2=值2...','额外参数1=值1&额外参数2=值2...')
-    // '路由正则'=>'外部地址'
-    // '路由正则'=>array('外部地址','重定向代码')
-    // 参数值和外部地址中可以用动态变量 采用 :1 :2 的方式
-    // '/new\/(\d+)\/(\d+)/'=>array('News/read?id=:1&page=:2&cate=1','status=1'),
-    // '/new\/(\d+)/'=>array('/new.php?id=:1&page=:2&status=1','301'), 重定向
-
+    /**
+     * 解析正则路由
+     * '路由正则'=>'[控制器/操作]?参数1=值1&参数2=值2...'
+     * '路由正则'=>array('[控制器/操作]?参数1=值1&参数2=值2...','额外参数1=值1&额外参数2=值2...')
+     * '路由正则'=>'外部地址'
+     * '路由正则'=>array('外部地址','重定向代码')
+     * 参数值和外部地址中可以用动态变量 采用 :1 :2 的方式
+     * '/new\/(\d+)\/(\d+)/'=>array('News/read?id=:1&page=:2&cate=1','status=1'),
+     * '/new\/(\d+)/'=>array('/new.php?id=:1&page=:2&status=1','301'), 重定向
+     * @param $regx
+     * @param $rule
+     * @return array|bool
+     */
     private static function checkUrlMatch($regx, $rule)
     {
         $m1 = explode('/', $regx);
@@ -268,8 +289,13 @@ class Route
         return $var;
     }
 
-    // 执行正则匹配下的闭包方法 支持参数调用
-
+    /**
+     * 执行正则匹配下的闭包方法 支持参数调用
+     * @param $closure
+     * @param array $var
+     * @return mixed
+     * @throws \ReflectionException
+     */
     private static function invokeRule($closure, $var = [])
     {
         $reflect = new \ReflectionFunction($closure);
@@ -287,8 +313,13 @@ class Route
         return $reflect->invokeArgs($args);
     }
 
-    // 执行规则匹配下的闭包方法 支持参数调用
-
+    /**
+     * 执行规则匹配下的闭包方法 支持参数调用
+     * @param $rule
+     * @param $route
+     * @param $regx
+     * @return bool
+     */
     private static function parseRule($rule, $route, $regx)
     {
         // 获取路由地址规则

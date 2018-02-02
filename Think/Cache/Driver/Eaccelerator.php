@@ -11,11 +11,8 @@ class Eaccelerator extends Cache
 {
 
     /**
-     * 构造函数
-     *
+     * Eaccelerator constructor.
      * @param array $options 缓存参数
-     *
-
      */
     public function __construct($options = [])
     {
@@ -48,9 +45,9 @@ class Eaccelerator extends Cache
      *
      * @param string  $name   缓存变量名
      * @param mixed   $value  存储数据
-     * @param integer $expire 有效时间（秒）
+     * @param int $expire 有效时间（秒）
      *
-     * @return boolean
+     * @return bool
      */
     public function set($name, $value, $expire = null)
     {
@@ -79,7 +76,7 @@ class Eaccelerator extends Cache
      *
      * @param string $name 缓存变量名
      *
-     * @return boolean
+     * @return bool
      */
     public function rm($name)
     {

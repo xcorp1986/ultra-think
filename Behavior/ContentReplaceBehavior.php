@@ -2,10 +2,12 @@
 
 namespace Behavior;
 
+use Think\Behavior;
+
 /**
  * 系统行为扩展：模板内容输出替换
  */
-class ContentReplaceBehavior
+class ContentReplaceBehavior extends Behavior
 {
 
     // 行为扩展的执行入口必须是run
@@ -17,7 +19,7 @@ class ContentReplaceBehavior
     /**
      * 模板内容替换
      *
-     * @access protected
+     
      *
      * @param string $content 模板内容
      *

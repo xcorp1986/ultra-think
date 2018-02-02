@@ -13,6 +13,7 @@ class Pgsql extends Driver
     /**
      * 取得数据表的字段信息
      *
+     * @param $tableName
      * @return array
      */
     public function getFields($tableName)
@@ -44,6 +45,7 @@ class Pgsql extends Driver
     /**
      * 取得数据库的表信息
      *
+     * @param string $dbName
      * @return array
      */
     public function getTables($dbName = '')
@@ -62,9 +64,8 @@ class Pgsql extends Driver
     /**
      * limit分析
      *
-     * @access protected
      *
-     * @param mixed $lmit
+     * @param mixed $limit
      *
      * @return string
      */

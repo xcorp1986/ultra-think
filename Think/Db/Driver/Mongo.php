@@ -35,8 +35,9 @@ class Mongo extends Driver
      *
      *
      * @param array $config 数据库配置数组
+     * @throws \Think\BaseException
      */
-    public function __construct($config = '')
+    public function __construct($config = [])
     {
         if (!class_exists('mongoClient')) {
             E(L('_NOT_SUPPORT_').':Mongo');
@@ -51,10 +52,9 @@ class Mongo extends Driver
 
     /**
      * 连接数据库方法
-     *
-
+     * {@inheritdoc}
      */
-    public function connect($config = '', $linkNum = 0)
+    public function connect($config = [], $linkNum = 0)
     {
         if (!isset($this->linkID[$linkNum])) {
             if (empty($config)) {
@@ -94,7 +94,9 @@ class Mongo extends Driver
      *
      * @param array $command 指令
      *
+     * @param array $options
      * @return array
+     * @throws \Think\BaseException
      */
     public function command($command = [], $options = [])
     {
@@ -138,9 +140,10 @@ class Mongo extends Driver
      *
      *
      * @param string $code sql指令
-     * @param array  $args 参数
+     * @param array $args 参数
      *
      * @return mixed
+     * @throws \Think\BaseException
      */
     public function execute($code, $args = [])
     {
@@ -190,11 +193,12 @@ class Mongo extends Driver
      * 插入记录
      *
      *
-     * @param mixed   $data    数据
-     * @param array   $options 参数表达式
-     * @param boolean $replace 是否replace
+     * @param mixed $data 数据
+     * @param array $options 参数表达式
+     * @param bool $replace 是否replace
      *
-     * @return false | integer
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function insert($data, $options = [], $replace = false)
     {
@@ -233,9 +237,9 @@ class Mongo extends Driver
      * 切换当前操作的Db和Collection
      *
      *
-     * @param string  $collection collection
-     * @param string  $db         db
-     * @param boolean $master     是否主服务器
+     * @param string $collection collection
+     * @param string $db db
+     * @param bool $master 是否主服务器
      *
      * @return void
      */
@@ -276,7 +280,7 @@ class Mongo extends Driver
      *
      *
      * @param array $dataList 数据
-     * @param array $options  参数表达式
+     * @param array $options 参数表达式
      *
      * @return bool
      */
@@ -305,7 +309,7 @@ class Mongo extends Driver
      *
      * @param string $pk 主键名
      *
-     * @return integer
+     * @return int
      */
     public function getMongoNextId($pk)
     {
@@ -331,7 +335,7 @@ class Mongo extends Driver
      * 更新记录
      *
      *
-     * @param mixed $data    数据
+     * @param mixed $data 数据
      * @param array $options 表达式
      *
      * @return bool
@@ -373,7 +377,6 @@ class Mongo extends Driver
     /**
      * where分析
      *
-     * @access protected
      *
      * @param mixed $where
      *
@@ -435,10 +438,9 @@ class Mongo extends Driver
     /**
      * 特殊条件分析
      *
-     * @access protected
      *
      * @param string $key
-     * @param mixed  $val
+     * @param mixed $val
      *
      * @return string
      */
@@ -482,10 +484,9 @@ class Mongo extends Driver
     /**
      * where子单元分析
      *
-     * @access protected
      *
      * @param string $key
-     * @param mixed  $val
+     * @param mixed $val
      *
      * @return array
      */
@@ -551,7 +552,6 @@ class Mongo extends Driver
     /**
      * set分析
      *
-     * @access protected
      *
      * @param array $data
      *
@@ -593,7 +593,8 @@ class Mongo extends Driver
      *
      * @param array $options 表达式
      *
-     * @return false | integer
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function delete($options = [])
     {
@@ -627,7 +628,8 @@ class Mongo extends Driver
      *
      * @param array $options 表达式
      *
-     * @return false | integer
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function clear($options = [])
     {
@@ -748,7 +750,6 @@ class Mongo extends Driver
     /**
      * field分析
      *
-     * @access protected
      *
      * @param mixed $fields
      *
@@ -783,7 +784,6 @@ class Mongo extends Driver
     /**
      * order分析
      *
-     * @access protected
      *
      * @param mixed $order
      *
@@ -811,7 +811,6 @@ class Mongo extends Driver
     /**
      * limit分析
      *
-     * @access protected
      *
      * @param mixed $limit
      *

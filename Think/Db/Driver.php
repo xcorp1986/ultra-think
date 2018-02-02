@@ -3,12 +3,14 @@
 namespace Think\Db;
 
 use PDO;
-use Think\Config;
-use Think\Debug;
 
 abstract class Driver
 {
-    // PDO操作实例
+
+    /**
+     * PDO操作实例
+     * @var \PDOStatement
+     */
     protected $PDOStatement = null;
     // 当前操作所属的模型名
     protected $model = '_think_';
@@ -25,46 +27,47 @@ abstract class Driver
     protected $error = '';
     // 数据库连接ID 支持多个连接
     protected $linkID = [];
-    // 当前连接ID
+    /**
+     * 当前连接ID
+     * @var \PDO $_linkID
+     */
     protected $_linkID = null;
     // 数据库连接参数配置
-    protected $config
-        = [
-            'type'           => '',     // 数据库类型
-            'hostname'       => '127.0.0.1', // 服务器地址
-            'database'       => '',          // 数据库名
-            'username'       => '',      // 用户名
-            'password'       => '',          // 密码
-            'hostport'       => '',        // 端口
-            'dsn'            => '', //
-            'params'         => [], // 数据库连接参数
-            'charset'        => 'utf8',      // 数据库编码默认采用utf8
-            'prefix'         => '',    // 数据库表前缀
-            'debug'          => false, // 数据库调试模式
-            'deploy'         => 0, // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
-            'rw_separate'    => false,       // 数据库读写是否分离 主从式有效
-            'master_num'     => 1, // 读写分离后 主服务器数量
-            'slave_no'       => '', // 指定从服务器序号
-            'db_like_fields' => '',
-        ];
+    protected $config = [
+        'type'           => '',     // 数据库类型
+        'hostname'       => '127.0.0.1', // 服务器地址
+        'database'       => '',          // 数据库名
+        'username'       => '',      // 用户名
+        'password'       => '',          // 密码
+        'hostport'       => '',        // 端口
+        'dsn'            => '', //
+        'params'         => [], // 数据库连接参数
+        'charset'        => 'utf8',      // 数据库编码默认采用utf8
+        'prefix'         => '',    // 数据库表前缀
+        'debug'          => false, // 数据库调试模式
+        'deploy'         => 0, // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+        'rw_separate'    => false,       // 数据库读写是否分离 主从式有效
+        'master_num'     => 1, // 读写分离后 主服务器数量
+        'slave_no'       => '', // 指定从服务器序号
+        'db_like_fields' => '',
+    ];
     // 数据库表达式
-    protected $exp
-        = [
-            'eq'          => '=',
-            'neq'         => '<>',
-            'gt'          => '>',
-            'egt'         => '>=',
-            'lt'          => '<',
-            'elt'         => '<=',
-            'notlike'     => 'NOT LIKE',
-            'like'        => 'LIKE',
-            'in'          => 'IN',
-            'notin'       => 'NOT IN',
-            'not in'      => 'NOT IN',
-            'between'     => 'BETWEEN',
-            'not between' => 'NOT BETWEEN',
-            'notbetween'  => 'NOT BETWEEN',
-        ];
+    protected $exp = [
+        'eq'          => '=',
+        'neq'         => '<>',
+        'gt'          => '>',
+        'egt'         => '>=',
+        'lt'          => '<',
+        'elt'         => '<=',
+        'notlike'     => 'NOT LIKE',
+        'like'        => 'LIKE',
+        'in'          => 'IN',
+        'notin'       => 'NOT IN',
+        'not in'      => 'NOT IN',
+        'between'     => 'BETWEEN',
+        'not between' => 'NOT BETWEEN',
+        'notbetween'  => 'NOT BETWEEN',
+    ];
     // 查询表达式
     protected $selectSql = 'SELECT%DISTINCT% %FIELD% FROM %TABLE%%FORCE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT% %UNION%%LOCK%%COMMENT%';
     // 查询次数
@@ -72,13 +75,12 @@ abstract class Driver
     // 执行次数
     protected $executeTimes = 0;
     // PDO连接参数
-    protected $options
-        = [
-            PDO::ATTR_CASE              => PDO::CASE_LOWER,
-            PDO::ATTR_ERRMODE           => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_ORACLE_NULLS      => PDO::NULL_NATURAL,
-            PDO::ATTR_STRINGIFY_FETCHES => false,
-        ];
+    protected $options = [
+        PDO::ATTR_CASE              => PDO::CASE_LOWER,
+        PDO::ATTR_ERRMODE           => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_ORACLE_NULLS      => PDO::NULL_NATURAL,
+        PDO::ATTR_STRINGIFY_FETCHES => false,
+    ];
     protected $bind = []; // 参数绑定
 
     /**
@@ -87,7 +89,7 @@ abstract class Driver
      *
      * @param array $config 数据库配置数组
      */
-    public function __construct($config = '')
+    public function __construct($config = [])
     {
         if (!empty($config)) {
             $this->config = array_merge($this->config, $config);
@@ -101,6 +103,7 @@ abstract class Driver
      * 启动事务
      *
      * @return void
+     * @throws \Think\BaseException
      */
     public function startTrans()
     {
@@ -120,11 +123,10 @@ abstract class Driver
     /**
      * 初始化数据库连接
      *
-     * @access protected
      *
-     * @param boolean $master 主服务器
+     * @param bool $master 主服务器
      *
-     * @return void
+     * @throws \Think\BaseException
      */
     protected function initConnect($master = true)
     {
@@ -142,11 +144,11 @@ abstract class Driver
     /**
      * 连接分布式服务器
      *
-     * @access protected
      *
-     * @param boolean $master 主服务器
+     * @param bool $master 主服务器
      *
-     * @return void
+     * @return mixed
+     * @throws \Think\BaseException
      */
     protected function multiConnect($master = false)
     {
@@ -226,8 +228,11 @@ abstract class Driver
 
     /**
      * 连接数据库方法
-     *
-
+     * @param string $config
+     * @param int $linkNum
+     * @param bool $autoConnection
+     * @return mixed
+     * @throws \Think\BaseException
      */
     public function connect($config = '', $linkNum = 0, $autoConnection = false)
     {
@@ -278,7 +283,8 @@ abstract class Driver
     /**
      * 用于非自动提交状态下面的查询提交
      *
-     * @return boolean
+     * @return bool
+     * @throws \Think\BaseException
      */
     public function commit()
     {
@@ -300,6 +306,7 @@ abstract class Driver
      * 并显示当前的SQL语句
      *
      * @return string
+     * @throws \Think\BaseException
      */
     public function error()
     {
@@ -324,7 +331,8 @@ abstract class Driver
     /**
      * 事务回滚
      *
-     * @return boolean
+     * @return bool
+     * @throws \Think\BaseException
      */
     public function rollback()
     {
@@ -345,9 +353,9 @@ abstract class Driver
      * 获得查询次数
      *
      *
-     * @param boolean $execute 是否包含所有查询
+     * @param bool $execute 是否包含所有查询
      *
-     * @return integer
+     * @return int
      */
     public function getQueryTimes($execute = false)
     {
@@ -358,7 +366,7 @@ abstract class Driver
     /**
      * 获得执行次数
      *
-     * @return integer
+     * @return int
      */
     public function getExecuteTimes()
     {
@@ -369,11 +377,12 @@ abstract class Driver
      * 插入记录
      *
      *
-     * @param mixed   $data    数据
-     * @param array   $options 参数表达式
-     * @param boolean $replace 是否replace
+     * @param mixed $data 数据
+     * @param array $options 参数表达式
+     * @param bool $replace 是否replace
      *
-     * @return false | integer
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function insert($data, $options = [], $replace = false)
     {
@@ -422,11 +431,10 @@ abstract class Driver
     /**
      * 参数绑定分析
      *
-     * @access protected
      *
      * @param array $bind
      *
-     * @return array
+     * @return void
      */
     protected function parseBind($bind)
     {
@@ -436,7 +444,6 @@ abstract class Driver
     /**
      * 字段名分析
      *
-     * @access protected
      *
      * @param string $key
      *
@@ -450,7 +457,6 @@ abstract class Driver
     /**
      * value分析
      *
-     * @access protected
      *
      * @param mixed $value
      *
@@ -497,10 +503,9 @@ abstract class Driver
     /**
      * 参数绑定
      *
-     * @access protected
      *
-     * @param string $name  绑定参数名
-     * @param mixed  $value 绑定值
+     * @param string $name 绑定参数名
+     * @param mixed $value 绑定值
      *
      * @return void
      */
@@ -512,9 +517,8 @@ abstract class Driver
     /**
      * table分析
      *
-     * @access protected
      *
-     * @param mixed $table
+     * @param mixed $tables
      *
      * @return string
      */
@@ -543,7 +547,6 @@ abstract class Driver
     /**
      * ON DUPLICATE KEY UPDATE 分析
      *
-     * @access protected
      *
      * @param mixed $duplicate
      *
@@ -557,7 +560,6 @@ abstract class Driver
     /**
      * comment分析
      *
-     * @access protected
      *
      * @param string $comment
      *
@@ -572,10 +574,11 @@ abstract class Driver
      * 执行语句
      *
      *
-     * @param string  $str      sql指令
-     * @param boolean $fetchSql 不执行只是获取SQL
+     * @param string $str sql指令
+     * @param bool $fetchSql 不执行只是获取SQL
      *
      * @return mixed
+     * @throws \Think\BaseException
      */
     public function execute($str, $fetchSql = false)
     {
@@ -650,7 +653,6 @@ abstract class Driver
     /**
      * 释放查询结果
      *
-
      */
     public function free()
     {
@@ -662,9 +664,8 @@ abstract class Driver
     /**
      * 数据库调试 记录当前SQL
      *
-     * @access protected
      *
-     * @param boolean $start 调试开始标记 true 开始 false 结束
+     * @param bool $start 调试开始标记 true 开始 false 结束
      */
     protected function debug($start)
     {
@@ -692,11 +693,12 @@ abstract class Driver
      * 批量插入记录
      *
      *
-     * @param mixed   $dataSet 数据集
-     * @param array   $options 参数表达式
-     * @param boolean $replace 是否replace
+     * @param mixed $dataSet 数据集
+     * @param array $options 参数表达式
+     * @param bool $replace 是否replace
      *
-     * @return false | integer
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function insertAll($dataSet, $options = [], $replace = false)
     {
@@ -749,10 +751,10 @@ abstract class Driver
      *
      *
      * @param string $fields 要插入的数据表字段名
-     * @param string $table  要插入的数据表名
-     * @param array  $option 查询数据参数
-     *
-     * @return false | integer
+     * @param string $table 要插入的数据表名
+     * @param array $options
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function selectInsert($fields, $table, $options = [])
     {
@@ -781,6 +783,7 @@ abstract class Driver
      * @param array $options 表达式
      *
      * @return string
+     * @throws \Think\BaseException
      */
     public function buildSelectSql($options = [])
     {
@@ -805,9 +808,11 @@ abstract class Driver
      * 替换SQL语句中表达式
      *
      *
+     * @param $sql
      * @param array $options 表达式
      *
      * @return string
+     * @throws \Think\BaseException
      */
     public function parseSql($sql, $options = [])
     {
@@ -875,7 +880,6 @@ abstract class Driver
     /**
      * distinct分析
      *
-     * @access protected
      *
      * @param mixed $distinct
      *
@@ -889,7 +893,6 @@ abstract class Driver
     /**
      * field分析
      *
-     * @access protected
      *
      * @param mixed $fields
      *
@@ -925,7 +928,6 @@ abstract class Driver
     /**
      * join分析
      *
-     * @access protected
      *
      * @param mixed $join
      *
@@ -944,11 +946,11 @@ abstract class Driver
     /**
      * where分析
      *
-     * @access protected
      *
      * @param mixed $where
      *
      * @return string
+     * @throws \Think\BaseException
      */
     protected function parseWhere($where)
     {
@@ -1022,12 +1024,12 @@ abstract class Driver
     /**
      * 特殊条件分析
      *
-     * @access protected
      *
      * @param string $key
-     * @param mixed  $val
+     * @param mixed $val
      *
      * @return string
+     * @throws \Think\BaseException
      */
     protected function parseThinkWhere($key, $val)
     {
@@ -1063,6 +1065,12 @@ abstract class Driver
         return '( '.$whereStr.' )';
     }
 
+    /**
+     * @param $key
+     * @param $val
+     * @return string
+     * @throws \Think\BaseException
+     */
     protected function parseWhereItem($key, $val)
     {
         $whereStr = '';
@@ -1155,7 +1163,6 @@ abstract class Driver
     /**
      * group分析
      *
-     * @access protected
      *
      * @param mixed $group
      *
@@ -1169,7 +1176,6 @@ abstract class Driver
     /**
      * having分析
      *
-     * @access protected
      *
      * @param string $having
      *
@@ -1183,7 +1189,6 @@ abstract class Driver
     /**
      * order分析
      *
-     * @access protected
      *
      * @param mixed $order
      *
@@ -1209,9 +1214,8 @@ abstract class Driver
     /**
      * limit分析
      *
-     * @access protected
      *
-     * @param mixed $lmit
+     * @param mixed $limit
      *
      * @return string
      */
@@ -1223,11 +1227,11 @@ abstract class Driver
     /**
      * union分析
      *
-     * @access protected
      *
      * @param mixed $union
      *
      * @return string
+     * @throws \Think\BaseException
      */
     protected function parseUnion($union)
     {
@@ -1250,7 +1254,7 @@ abstract class Driver
     /**
      * 设置锁机制
      *
-     * @access protected
+     * @param bool $lock
      * @return string
      */
     protected function parseLock($lock = false)
@@ -1261,7 +1265,6 @@ abstract class Driver
     /**
      * index分析，可在操作链中指定需要强制使用的索引
      *
-     * @access protected
      *
      * @param mixed $index
      *
@@ -1283,10 +1286,11 @@ abstract class Driver
      * 更新记录
      *
      *
-     * @param mixed $data    数据
+     * @param mixed $data 数据
      * @param array $options 表达式
      *
-     * @return false | integer
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function update($data, $options)
     {
@@ -1324,7 +1328,6 @@ abstract class Driver
     /**
      * set分析
      *
-     * @access protected
      *
      * @param array $data
      *
@@ -1363,7 +1366,8 @@ abstract class Driver
      *
      * @param array $options 表达式
      *
-     * @return false | integer
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function delete($options = [])
     {
@@ -1408,6 +1412,7 @@ abstract class Driver
      * @param array $options 表达式
      *
      * @return mixed
+     * @throws \Think\BaseException
      */
     public function select($options = [])
     {
@@ -1426,10 +1431,11 @@ abstract class Driver
      * 执行查询 返回数据集
      *
      *
-     * @param string  $str      sql指令
-     * @param boolean $fetchSql 不执行只是获取SQL
+     * @param string $str sql指令
+     * @param bool $fetchSql 不执行只是获取SQL
      *
      * @return mixed
+     * @throws \Think\BaseException
      */
     public function query($str, $fetchSql = false)
     {
@@ -1496,7 +1502,6 @@ abstract class Driver
     /**
      * 获得所有的查询数据
      *
-     * @access private
      * @return array
      */
     private function getResult()
@@ -1556,7 +1561,6 @@ abstract class Driver
     /**
      * 析构方法
      *
-
      */
     public function __destruct()
     {
@@ -1571,7 +1575,6 @@ abstract class Driver
     /**
      * 关闭数据库
      *
-
      */
     public function close()
     {

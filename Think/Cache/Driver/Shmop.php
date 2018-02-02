@@ -11,11 +11,9 @@ class Shmop extends Cache
 {
 
     /**
-     * 构造函数
-     *
+     * Shmop constructor.
      * @param array $options 缓存参数
-     *
-
+     * @throws \Think\BaseException
      */
     public function __construct($options = [])
     {
@@ -41,11 +39,11 @@ class Shmop extends Cache
     /**
      * 生成IPC key
      *
-     * @access private
+     
      *
      * @param string $project 项目标识名
      *
-     * @return integer
+     * @return int
      */
     private function _ftok($project)
     {
@@ -80,7 +78,7 @@ class Shmop extends Cache
      * @param string $name  缓存变量名
      * @param mixed  $value 存储数据
      *
-     * @return boolean
+     * @return bool
      */
     public function set($name, $value)
     {
@@ -112,11 +110,11 @@ class Shmop extends Cache
     /**
      * 共享锁定
      *
-     * @access private
+     
      *
      * @param string $name 缓存变量名
      *
-     * @return boolean
+     * @return bool
      */
     private function _lock()
     {
@@ -175,11 +173,11 @@ class Shmop extends Cache
     /**
      * 写入操作
      *
-     * @access private
+     
      *
      * @param string $name 缓存变量名
      *
-     * @return integer|boolean
+     * @return int|boolean
      */
     private function _write(&$val, &$lh)
     {
@@ -199,11 +197,11 @@ class Shmop extends Cache
     /**
      * 解除共享锁定
      *
-     * @access private
+     
      *
      * @param string $name 缓存变量名
      *
-     * @return boolean
+     * @return bool
      */
     private function _unlock(&$fp)
     {
@@ -220,7 +218,7 @@ class Shmop extends Cache
      *
      * @param string $name 缓存变量名
      *
-     * @return boolean
+     * @return bool
      */
     public function rm($name)
     {

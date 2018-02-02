@@ -4,6 +4,9 @@ namespace Think;
 
 /**
  * 缓存管理类
+ * @method mixed get($name) 读取缓存
+ * @method bool set($name, $value) 写入缓存
+ * @method bool rm($name) 删除缓存
  */
 class Cache
 {
@@ -12,7 +15,6 @@ class Cache
      * 操作句柄
      *
      * @var string
-     * @access protected
      */
     protected $handler;
 
@@ -20,14 +22,15 @@ class Cache
      * 缓存连接参数
      *
      * @var integer
-     * @access protected
      */
     protected $options = [];
 
     /**
      * 取得缓存类实例
-     *
+     * @param string $type
+     * @param array $options
      * @return mixed
+     * @throws BaseException
      */
     public static function getInstance($type = '', $options = [])
     {
@@ -45,10 +48,10 @@ class Cache
      * 连接缓存
      *
      *
-     * @param string $type    缓存类型
-     * @param array  $options 配置数组
-     *
-     * @return object
+     * @param string $type 缓存类型
+     * @param array $options 配置数组
+     * @return mixed
+     * @throws BaseException
      */
     public function connect($type = '', $options = [])
     {
@@ -97,11 +100,11 @@ class Cache
     /**
      * 队列缓存
      *
-     * @access protected
      *
-     * @param string $key 队列名
-     *
+     * @param $method
+     * @param $args
      * @return mixed
+     * @throws BaseException
      */
     //
     public function __call($method, $args)

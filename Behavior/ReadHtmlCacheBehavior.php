@@ -2,12 +2,13 @@
 
 namespace Behavior;
 
+use Think\Behavior;
 use Think\Storage;
 
 /**
  * 系统行为扩展：静态缓存读取
  */
-class ReadHtmlCacheBehavior
+class ReadHtmlCacheBehavior extends Behavior
 {
     // 行为扩展的执行入口必须是run
     public function run(&$params)
@@ -141,9 +142,9 @@ class ReadHtmlCacheBehavior
      * 如果无效需要重新更新
      *
      * @param string $cacheFile  静态文件名
-     * @param integer $cacheTime 缓存有效期
+     * @param int $cacheTime 缓存有效期
      *
-     * @return boolean
+     * @return bool
      */
     public static function checkHTMLCache($cacheFile = '', $cacheTime = '')
     {

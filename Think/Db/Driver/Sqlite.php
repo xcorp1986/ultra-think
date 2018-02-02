@@ -13,6 +13,7 @@ class Sqlite extends Driver
     /**
      * 取得数据表的字段信息
      *
+     * @param $tableName
      * @return array
      */
     public function getFields($tableName)
@@ -41,6 +42,7 @@ class Sqlite extends Driver
     /**
      * 取得数据库的表信息
      *
+     * @param string $dbName
      * @return array
      */
     public function getTables($dbName = '')
@@ -74,6 +76,7 @@ class Sqlite extends Driver
     /**
      * limit
      *
+     * @param $limit
      * @return string
      */
     public function parseLimit($limit)

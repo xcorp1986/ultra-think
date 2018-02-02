@@ -11,9 +11,8 @@ class File extends Cache
 {
 
     /**
-     * 构造函数
-     *
-
+     * File constructor.
+     * @param array $options
      */
     public function __construct($options = [])
     {
@@ -37,8 +36,8 @@ class File extends Cache
     /**
      * 初始化检查
      *
-     * @access private
-     * @return boolean
+     
+     * @return bool
      */
     private function init()
     {
@@ -96,7 +95,7 @@ class File extends Cache
     /**
      * 取得变量的存储文件名
      *
-     * @access private
+     
      *
      * @param string $name 缓存变量名
      *
@@ -130,7 +129,7 @@ class File extends Cache
      * @param mixed  $value  存储数据
      * @param int    $expire 有效时间 0为永久
      *
-     * @return boolean
+     * @return bool
      */
     public function set($name, $value, $expire = null)
     {
@@ -170,7 +169,7 @@ class File extends Cache
      *
      * @param string $name 缓存变量名
      *
-     * @return boolean
+     * @return bool
      */
     public function rm($name)
     {
@@ -183,7 +182,7 @@ class File extends Cache
      *
      * @param string $name 缓存变量名
      *
-     * @return boolean
+     * @return bool
      */
     public function clear()
     {

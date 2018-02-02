@@ -3,10 +3,12 @@
 
 namespace Behavior;
 
+use Think\Behavior;
+
 /**
  * 系统行为扩展：表单令牌生成
  */
-class TokenBuildBehavior
+class TokenBuildBehavior extends Behavior
 {
 
     public function run(&$content)

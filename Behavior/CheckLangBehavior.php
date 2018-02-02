@@ -2,10 +2,12 @@
 
 namespace Behavior;
 
+use Think\Behavior;
+
 /**
  * 语言检测 并自动加载语言包
  */
-class CheckLangBehavior
+class CheckLangBehavior extends Behavior
 {
 
     // 行为扩展的执行入口必须是run
@@ -19,7 +21,7 @@ class CheckLangBehavior
      * 语言检查
      * 检查浏览器支持语言，并自动加载语言包
      *
-     * @access private
+     
      * @return void
      */
     private function checkLanguage()

@@ -5,11 +5,9 @@ namespace Think;
 /**
  * ThinkPHP 引导类
  */
-class Think
+final class Think
 {
-
-    // 类映射
-    private static $_map = [];
+    const VERSION = '3.2.3';
 
     // 实例化对象
     private static $_instance = [];
@@ -110,14 +108,12 @@ class Think
 
         // 记录加载文件时间
         G('loadTime');
-        // 运行应用
-        App::run();
     }
 
     /**
      * 取得对象实例 支持调用类的静态方法
-     *
-     * @param string $class  对象类名
+     * @deprecated
+     * @param string $class 对象类名
      * @param string $method 类的静态方法名
      *
      * @return object
@@ -228,10 +224,10 @@ class Think
      * 自定义错误处理
      *
      *
-     * @param int    $errno   错误类型
-     * @param string $errstr  错误信息
+     * @param int $errno 错误类型
+     * @param string $errstr 错误信息
      * @param string $errfile 错误文件
-     * @param int    $errline 错误行数
+     * @param int $errline 错误行数
      *
      * @return void
      */
@@ -260,10 +256,10 @@ class Think
     /**
      * 添加和获取页面Trace记录
      *
-     * @param string  $value  变量
-     * @param string  $label  标签
-     * @param string  $level  日志级别(或者页面Trace的选项卡)
-     * @param boolean $record 是否记录日志
+     * @param string $value 变量
+     * @param string $label 标签
+     * @param string $level 日志级别(或者页面Trace的选项卡)
+     * @param bool $record 是否记录日志
      *
      * @return void|array
      */

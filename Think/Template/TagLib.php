@@ -12,7 +12,7 @@ class TagLib
      * 标签库定义XML文件
      *
      * @var string
-     * @access protected
+
      */
     protected $xml = '';
     protected $tags = [];// 标签定义
@@ -20,7 +20,7 @@ class TagLib
      * 标签库名称
      *
      * @var string
-     * @access protected
+
      */
     protected $tagLib = '';
 
@@ -28,7 +28,7 @@ class TagLib
      * 标签库标签列表
      *
      * @var string
-     * @access protected
+
      */
     protected $tagList = [];
 
@@ -36,7 +36,7 @@ class TagLib
      * 标签库分析数组
      *
      * @var string
-     * @access protected
+
      */
     protected $parse = [];
 
@@ -44,7 +44,7 @@ class TagLib
      * 标签库是否有效
      *
      * @var string
-     * @access protected
+
      */
     protected $valid = false;
 
@@ -52,7 +52,7 @@ class TagLib
      * 当前模板对象
      *
      * @var object
-     * @access protected
+
      */
     protected $tpl;
 

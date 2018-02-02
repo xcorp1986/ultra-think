@@ -23,6 +23,7 @@ class Sqlsrv extends Driver
     /**
      * 取得数据表的字段信息
      *
+     * @param $tableName
      * @return array
      */
     public function getFields($tableName)
@@ -58,6 +59,7 @@ class Sqlsrv extends Driver
     /**
      * 取得数据表的字段信息
      *
+     * @param string $dbName
      * @return array
      */
     public function getTables($dbName = '')
@@ -107,7 +109,7 @@ class Sqlsrv extends Driver
      * @param mixed $data    数据
      * @param array $options 表达式
      *
-     * @return false | integer
+     * @return false | int
      */
     public function update($data, $options)
     {
@@ -138,7 +140,7 @@ class Sqlsrv extends Driver
      *
      * @param array $options 表达式
      *
-     * @return false | integer
+     * @return false | int
      */
     public function delete($options = [])
     {
@@ -184,7 +186,6 @@ class Sqlsrv extends Driver
     /**
      * order分析
      *
-     * @access protected
      *
      * @param mixed $order
      *
@@ -198,7 +199,6 @@ class Sqlsrv extends Driver
     /**
      * 字段名分析
      *
-     * @access protected
      *
      * @param string $key
      *

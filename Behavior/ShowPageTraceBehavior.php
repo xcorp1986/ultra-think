@@ -3,20 +3,21 @@
 
 namespace Behavior;
 
+use Think\Behavior;
+
 /**
  * 系统行为扩展：页面Trace显示输出
  */
-class ShowPageTraceBehavior
+class ShowPageTraceBehavior extends Behavior
 {
-    protected $tracePageTabs
-        = [
-            'BASE'      => '基本',
-            'FILE'      => '文件',
-            'INFO'      => '流程',
-            'ERR|NOTIC' => '错误',
-            'SQL'       => 'SQL',
-            'DEBUG'     => '调试',
-        ];
+    protected $tracePageTabs = [
+        'BASE'      => '基本',
+        'FILE'      => '文件',
+        'INFO'      => '流程',
+        'ERR|NOTIC' => '错误',
+        'SQL'       => 'SQL',
+        'DEBUG'     => '调试',
+    ];
 
     // 行为扩展的执行入口必须是run
     public function run(&$params)
@@ -29,7 +30,7 @@ class ShowPageTraceBehavior
     /**
      * 显示页面Trace信息
      *
-     * @access private
+
      */
     private function showTrace()
     {

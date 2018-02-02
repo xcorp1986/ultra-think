@@ -566,7 +566,7 @@ class Cx extends TagLib
      *
      * @param array   $tag     标签属性
      * @param string  $content 标签内容
-     * @param boolean $isFile  是否文件方式
+     * @param bool $isFile  是否文件方式
      * @param string  $type    类型
      *
      * @return string

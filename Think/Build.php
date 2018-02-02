@@ -76,7 +76,7 @@ class [MODEL]Model extends Model {
                 file_put_contents(
                     CONF_PATH.'config'.CONF_EXT,
                     '.php' == CONF_EXT
-                        ? "<?php\nreturn array(\n\t//'配置项'=>'配置值'\n);" : ''
+                        ? "<?php\nreturn [\n\t//'配置项'=>'配置值'\n];" : ''
                 );
             }
             // 写入模块配置文件
@@ -84,7 +84,7 @@ class [MODEL]Model extends Model {
                 file_put_contents(
                     APP_PATH.$module.'/Conf/config'.CONF_EXT,
                     '.php' == CONF_EXT
-                        ? "<?php\nreturn array(\n\t//'配置项'=>'配置值'\n);" : ''
+                        ? "<?php\nreturn [\n\t//'配置项'=>'配置值'\n];" : ''
                 );
             }
             // 生成模块的测试控制器

@@ -23,9 +23,11 @@ class File extends Storage
      *
      *
      * @param string $filename 文件名
-     * @param string $content  追加的文件内容
+     * @param string $content 追加的文件内容
      *
-     * @return boolean
+     * @param string $type
+     * @return bool
+     * @throws \Think\BaseException
      */
     public function append($filename, $content, $type = '')
     {
@@ -42,6 +44,7 @@ class File extends Storage
      *
      * @param string $filename 文件名
      *
+     * @param string $type
      * @return string
      */
     public function read($filename, $type = '')
@@ -54,9 +57,10 @@ class File extends Storage
      *
      *
      * @param string $filename 文件名
-     * @param string $name     信息名 mtime或者content
+     * @param string $name 信息名 mtime或者content
      *
-     * @return boolean
+     * @param string $type
+     * @return bool
      */
     public function get($filename, $name, $type = '')
     {
@@ -80,9 +84,11 @@ class File extends Storage
      *
      *
      * @param string $filename 文件名
-     * @param string $content  文件内容
+     * @param string $content 文件内容
      *
-     * @return boolean
+     * @param string $type
+     * @return bool
+     * @throws \Think\BaseException
      */
     public function put($filename, $content, $type = '')
     {
@@ -103,12 +109,12 @@ class File extends Storage
      * 加载文件
      *
      *
-     * @param string $filename 文件名
+     * @param string $_filename 文件名
      * @param array  $vars     传入变量
      *
      * @return void
      */
-    public function load($_filename, $vars = null)
+    public function load($_filename, array $vars = [])
     {
         if (!is_null($vars)) {
             extract($vars, EXTR_OVERWRITE);
@@ -122,7 +128,8 @@ class File extends Storage
      *
      * @param string $filename 文件名
      *
-     * @return boolean
+     * @param string $type
+     * @return bool
      */
     public function has($filename, $type = '')
     {
@@ -135,7 +142,7 @@ class File extends Storage
      *
      * @param string $filename 文件名
      *
-     * @return boolean
+     * @return bool
      */
     public function unlink($filename, $type = '')
     {

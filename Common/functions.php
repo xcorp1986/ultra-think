@@ -103,14 +103,14 @@ if (!function_exists('yaml_parse_file')) {
  * 抛出异常处理
  *
  * @param string  $msg  异常消息
- * @param integer $code 异常代码 默认为0
+ * @param int $code 异常代码 默认为0
  *
- * @throws Think\Exception
+ * @throws Think\BaseException
  * @return void
  */
 function E($msg, $code = 0)
 {
-    throw new Think\Exception($msg, $code);
+    throw new Think\BaseException($msg, $code);
 }
 
 /**
@@ -128,7 +128,7 @@ function E($msg, $code = 0)
  *
  * @param string         $start 开始标签
  * @param string         $end   结束标签
- * @param integer|string $dec   小数位或者m
+ * @param int|string $dec   小数位或者m
  *
  * @return mixed
  */
@@ -217,7 +217,7 @@ function L($name = null, $value = null)
  * @param string  $value  变量
  * @param string  $label  标签
  * @param string  $level  日志级别
- * @param boolean $record 是否记录日志
+ * @param bool $record 是否记录日志
  *
  * @return void|array
  */
@@ -503,8 +503,8 @@ function array_map_recursive($filter, $data)
  * </code>
  *
  * @param string  $key  标识位置
- * @param integer $step 步进值
- * @param boolean $save 是否保存结果
+ * @param int $step 步进值
+ * @param bool $save 是否保存结果
  *
  * @return mixed
  */
@@ -531,7 +531,7 @@ function N($key, $step = 0, $save = false)
  * type 0 将Java风格转换为C的风格 1 将C风格转换为Java的风格
  *
  * @param string  $name 字符串
- * @param integer $type 转换类型
+ * @param int $type 转换类型
  *
  * @return string
  */
@@ -557,7 +557,7 @@ function parse_name($name, $type = 0)
  *
  * @param string $filename 文件地址
  *
- * @return boolean
+ * @return bool
  */
 function require_cache($filename)
 {
@@ -579,7 +579,7 @@ function require_cache($filename)
  *
  * @param string $filename 文件地址
  *
- * @return boolean
+ * @return bool
  */
 function file_exists_case($filename)
 {
@@ -603,7 +603,7 @@ function file_exists_case($filename)
  * @param string $baseUrl 起始路径
  * @param string $ext     导入的文件扩展名
  *
- * @return boolean
+ * @return bool
  */
 function import($class, $baseUrl = '', $ext = EXT)
 {
@@ -650,7 +650,7 @@ function import($class, $baseUrl = '', $ext = EXT)
 /**
  * 基于命名空间方式导入函数库
  * load('@.Util.Array')
- *
+ * @deprecated
  * @param string $name    函数库命名空间字符串
  * @param string $baseUrl 起始路径
  * @param string $ext     导入的文件扩展名
@@ -678,12 +678,13 @@ function load($name, $baseUrl = '', $ext = '.php')
 
 /**
  * 快速导入第三方框架类库 所有第三方框架的类库文件统一放到 系统的Vendor目录下面
+ * @deprecated
  *
  * @param string $class   类库
  * @param string $baseUrl 基础目录
  * @param string $ext     类库后缀
  *
- * @return boolean
+ * @return bool
  */
 function vendor($class, $baseUrl = '', $ext = '.php')
 {
@@ -768,7 +769,7 @@ function M($name = '', $tablePrefix = '', $connection = '')
  *
  * @param string  $name  资源地址 格式：[扩展://][模块/]资源名
  * @param string  $layer 分层名称
- * @param integer $level 控制器层次
+ * @param int $level 控制器层次
  *
  * @return string
  */
@@ -837,7 +838,7 @@ function controller($name, $path = '')
  *
  * @param string  $name  资源地址
  * @param string  $layer 控制层名称
- * @param integer $level 控制器层次
+ * @param int $level 控制器层次
  *
  * @return Think\Controller|false
  */
@@ -907,12 +908,11 @@ function tag($tag, &$params = null)
 
 /**
  * 执行某个行为
- *
- * @param string $name   行为名称
- * @param string $tag    标签名称（行为类无需传入）
- * @param Mixed  $params 传入的参数
- *
- * @return void
+ * @deprecated
+ * @param string $name 行为名称
+ * @param string $tag 标签名称（行为类无需传入）
+ * @param mixed $params 传入的参数
+ * @return mixed
  */
 function B($name, $tag = '', &$params = null)
 {
@@ -984,11 +984,11 @@ function strip_whitespace($content)
  *
  * @param string  $msg  异常消息
  * @param string  $type 异常类型 默认为Think\Exception
- * @param integer $code 异常代码 默认为0
+ * @param int $code 异常代码 默认为0
  *
  * @return void
  */
-function throw_exception($msg, $type = 'Think\\Exception', $code = 0)
+function throw_exception($msg, $type = 'Think\\BaseException', $code = 0)
 {
     Think\Log::record('建议使用E方法替代throw_exception', Think\Log::NOTICE);
     if (class_exists($type, false)) {
@@ -1002,9 +1002,9 @@ function throw_exception($msg, $type = 'Think\\Exception', $code = 0)
  * 浏览器友好的变量输出
  *
  * @param mixed   $var    变量
- * @param boolean $echo   是否输出 默认为True 如果为false 则返回输出字符串
+ * @param bool $echo   是否输出 默认为True 如果为false 则返回输出字符串
  * @param string  $label  标签 默认为空
- * @param boolean $strict 是否严谨 默认为true
+ * @param bool $strict 是否严谨 默认为true
  *
  * @return void|string
  */
@@ -1064,7 +1064,7 @@ function layout($layout)
  * @param string         $url    URL表达式，格式：'[模块/控制器/操作#锚点@域名]?参数1=值1&参数2=值2...'
  * @param string|array   $vars   传入的参数，支持数组和字符串
  * @param string|boolean $suffix 伪静态后缀，默认为true表示获取配置值
- * @param boolean        $domain 是否显示域名
+ * @param bool        $domain 是否显示域名
  *
  * @return string
  */
@@ -1253,6 +1253,7 @@ function U($url = '', $vars = '', $suffix = true, $domain = false)
 /**
  * 渲染输出Widget
  *
+ * @deprecated
  * @param string $name Widget名称
  * @param array  $data 传入的参数
  *
@@ -1266,7 +1267,7 @@ function W($name, $data = [])
 /**
  * 判断是否SSL协议
  *
- * @return boolean
+ * @return bool
  */
 function is_ssl()
 {
@@ -1286,7 +1287,7 @@ function is_ssl()
  * URL重定向
  *
  * @param string  $url  重定向的URL地址
- * @param integer $time 重定向的等待时间（秒）
+ * @param int $time 重定向的等待时间（秒）
  * @param string  $msg  重定向前的提示信息
  *
  * @return void
@@ -1800,8 +1801,8 @@ function load_ext_file($path)
 /**
  * 获取客户端IP地址
  *
- * @param integer $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
- * @param boolean $adv  是否进行高级模式获取（有可能被伪装）
+ * @param int $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
+ * @param bool $adv  是否进行高级模式获取（有可能被伪装）
  *
  * @return mixed
  */
@@ -1838,7 +1839,7 @@ function get_client_ip($type = 0, $adv = false)
 /**
  * 发送HTTP状态
  *
- * @param integer $code 状态码
+ * @param int $code 状态码
  *
  * @return void
  */

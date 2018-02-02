@@ -12,8 +12,9 @@ class Mysql extends Driver
 
     /**
      * 取得数据表的字段信息
-     *
-
+     * @param $tableName
+     * @return array
+     * @throws \Think\BaseException
      */
     public function getFields($tableName)
     {
@@ -53,8 +54,9 @@ class Mysql extends Driver
 
     /**
      * 取得数据库的表信息
-     *
-
+     * @param string $dbName
+     * @return array
+     * @throws \Think\BaseException
      */
     public function getTables($dbName = '')
     {
@@ -72,11 +74,12 @@ class Mysql extends Driver
      * 批量插入记录
      *
      *
-     * @param mixed   $dataSet 数据集
-     * @param array   $options 参数表达式
-     * @param boolean $replace 是否replace
+     * @param mixed $dataSet 数据集
+     * @param array $options 参数表达式
+     * @param bool $replace 是否replace
      *
-     * @return false | integer
+     * @return false | int
+     * @throws \Think\BaseException
      */
     public function insertAll($dataSet, $options = [], $replace = false)
     {
@@ -128,7 +131,6 @@ class Mysql extends Driver
     /**
      * ON DUPLICATE KEY UPDATE 分析
      *
-     * @access protected
      *
      * @param mixed $duplicate
      *
@@ -187,7 +189,6 @@ class Mysql extends Driver
     /**
      * 字段和表名处理
      *
-     * @access protected
      *
      * @param string $key
      *
@@ -207,10 +208,11 @@ class Mysql extends Driver
      * 执行存储过程查询 返回多个数据集
      *
      *
-     * @param string  $str      sql指令
-     * @param boolean $fetchSql 不执行只是获取SQL
+     * @param string $str sql指令
+     * @param bool $fetchSql 不执行只是获取SQL
      *
      * @return mixed
+     * @throws \Think\BaseException
      */
     public function procedure($str, $fetchSql = false)
     {

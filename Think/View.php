@@ -10,16 +10,14 @@ class View
     /**
      * 模板输出变量
      *
-     * @var tVar
-     * @access protected
+     * @var $tVar
      */
     protected $tVar = [];
 
     /**
      * 模板主题
      *
-     * @var theme
-     * @access protected
+     * @var $theme
      */
     protected $theme = '';
 
@@ -61,12 +59,13 @@ class View
      *
      *
      * @param string $templateFile 模板文件名
-     * @param string $charset      模板输出字符集
-     * @param string $contentType  输出类型
-     * @param string $content      模板输出内容
-     * @param string $prefix       模板缓存前缀
+     * @param string $charset 模板输出字符集
+     * @param string $contentType 输出类型
+     * @param string $content 模板输出内容
+     * @param string $prefix 模板缓存前缀
      *
      * @return mixed
+     * @throws BaseException
      */
     public function display(
         $templateFile = '',
@@ -91,10 +90,11 @@ class View
      *
      *
      * @param string $templateFile 模板文件名
-     * @param string $content      模板输出内容
-     * @param string $prefix       模板缓存前缀
+     * @param string $content 模板输出内容
+     * @param string $prefix 模板缓存前缀
      *
      * @return string
+     * @throws BaseException
      */
     public function fetch($templateFile = '', $content = '', $prefix = '')
     {
@@ -141,7 +141,6 @@ class View
     /**
      * 自动定位模板文件
      *
-     * @access protected
      *
      * @param string $template 模板文件规则
      *
@@ -188,7 +187,6 @@ class View
     /**
      * 获取当前的模板路径
      *
-     * @access protected
      *
      * @param  string $module 模块名
      *
@@ -212,7 +210,6 @@ class View
     /**
      * 获取当前的模板主题
      *
-     * @access private
      * @return string
      */
     private function getTemplateTheme()
@@ -235,11 +232,12 @@ class View
                 cookie('think_template', $theme, 864000);
             }
         }
+        // 当前模板主题名称
         defined('THEME_NAME')
         || define(
             'THEME_NAME',
             $theme
-        );                  // 当前模板主题名称
+        );
 
         return $theme ? $theme.'/' : '';
     }
@@ -247,10 +245,9 @@ class View
     /**
      * 输出内容文本可以包括Html
      *
-     * @access private
      *
-     * @param string $content     输出内容
-     * @param string $charset     模板输出字符集
+     * @param string $content 输出内容
+     * @param string $charset 模板输出字符集
      * @param string $contentType 输出类型
      *
      * @return mixed
@@ -265,8 +262,9 @@ class View
         }
         // 网页字符编码
         header('Content-Type:'.$contentType.'; charset='.$charset);
-        header('Cache-control: '.C('HTTP_CACHE_CONTROL'));  // 页面缓存控制
-        header('X-Powered-By:ThinkPHP');
+        // 页面缓存控制
+        header('Cache-control: '.C('HTTP_CACHE_CONTROL'));
+        header('X-Powered-By:ultra-think');
         // 输出模板文件
         echo $content;
     }

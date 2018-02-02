@@ -28,38 +28,36 @@ class Lite
     // 当前连接ID
     protected $_linkID = null;
     // 数据库连接参数配置
-    protected $config
-        = [
-            'type'        => '',     // 数据库类型
-            'hostname'    => '127.0.0.1', // 服务器地址
-            'database'    => '',          // 数据库名
-            'username'    => '',      // 用户名
-            'password'    => '',          // 密码
-            'hostport'    => '',        // 端口
-            'dsn'         => '', //
-            'params'      => [], // 数据库连接参数
-            'charset'     => 'utf8',      // 数据库编码默认采用utf8
-            'prefix'      => '',    // 数据库表前缀
-            'debug'       => false, // 数据库调试模式
-            'deploy'      => 0, // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
-            'rw_separate' => false,       // 数据库读写是否分离 主从式有效
-            'master_num'  => 1, // 读写分离后 主服务器数量
-            'slave_no'    => '', // 指定从服务器序号
-        ];
+    protected $config = [
+        'type'        => '',     // 数据库类型
+        'hostname'    => '127.0.0.1', // 服务器地址
+        'database'    => '',          // 数据库名
+        'username'    => '',      // 用户名
+        'password'    => '',          // 密码
+        'hostport'    => '',        // 端口
+        'dsn'         => '', //
+        'params'      => [], // 数据库连接参数
+        'charset'     => 'utf8',      // 数据库编码默认采用utf8
+        'prefix'      => '',    // 数据库表前缀
+        'debug'       => false, // 数据库调试模式
+        'deploy'      => 0, // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+        'rw_separate' => false,       // 数据库读写是否分离 主从式有效
+        'master_num'  => 1, // 读写分离后 主服务器数量
+        'slave_no'    => '', // 指定从服务器序号
+    ];
     // 数据库表达式
-    protected $comparison
-        = [
-            'eq'      => '=',
-            'neq'     => '<>',
-            'gt'      => '>',
-            'egt'     => '>=',
-            'lt'      => '<',
-            'elt'     => '<=',
-            'notlike' => 'NOT LIKE',
-            'like'    => 'LIKE',
-            'in'      => 'IN',
-            'notin'   => 'NOT IN',
-        ];
+    protected $comparison = [
+        'eq'      => '=',
+        'neq'     => '<>',
+        'gt'      => '>',
+        'egt'     => '>=',
+        'lt'      => '<',
+        'elt'     => '<=',
+        'notlike' => 'NOT LIKE',
+        'like'    => 'LIKE',
+        'in'      => 'IN',
+        'notin'   => 'NOT IN',
+    ];
     // 查询表达式
     protected $selectSql = 'SELECT%DISTINCT% %FIELD% FROM %TABLE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT% %UNION%%COMMENT%';
     // 查询次数
@@ -67,19 +65,18 @@ class Lite
     // 执行次数
     protected $executeTimes = 0;
     // PDO连接参数
-    protected $options
-        = [
-            PDO::ATTR_CASE              => PDO::CASE_LOWER,
-            PDO::ATTR_ERRMODE           => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_ORACLE_NULLS      => PDO::NULL_NATURAL,
-            PDO::ATTR_STRINGIFY_FETCHES => false,
-        ];
+    protected $options = [
+        PDO::ATTR_CASE              => PDO::CASE_LOWER,
+        PDO::ATTR_ERRMODE           => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_ORACLE_NULLS      => PDO::NULL_NATURAL,
+        PDO::ATTR_STRINGIFY_FETCHES => false,
+    ];
 
     /**
      * 构造函数 读取数据库配置信息
      *
      *
-     * @param array $config 数据库配置数组
+     * @param string $config 数据库配置数组
      */
     public function __construct($config = '')
     {
@@ -95,10 +92,11 @@ class Lite
      * 执行查询 返回数据集
      *
      *
-     * @param string $str  sql指令
-     * @param array  $bind 参数绑定
+     * @param string $str sql指令
+     * @param array $bind 参数绑定
      *
      * @return mixed
+     * @throws \Think\BaseException
      */
     public function query($str, $bind = [])
     {
@@ -153,11 +151,11 @@ class Lite
     /**
      * 初始化数据库连接
      *
-     * @access protected
      *
-     * @param boolean $master 主服务器
+     * @param bool $master 主服务器
      *
      * @return void
+     * @throws \Think\BaseException
      */
     protected function initConnect($master = true)
     {
@@ -175,11 +173,11 @@ class Lite
     /**
      * 连接分布式服务器
      *
-     * @access protected
      *
-     * @param boolean $master 主服务器
+     * @param bool $master 主服务器
      *
-     * @return void
+     * @return mixed
+     * @throws \Think\BaseException
      */
     protected function multiConnect($master = false)
     {
@@ -239,10 +237,12 @@ class Lite
 
     /**
      * 连接数据库方法
-     *
-
+     * @param array $config
+     * @param int $linkNum
+     * @return mixed
+     * @throws \Think\BaseException
      */
-    public function connect($config = '', $linkNum = 0)
+    public function connect($config = [], $linkNum = 0)
     {
         if (!isset($this->linkID[$linkNum])) {
             if (empty($config)) {
@@ -307,9 +307,8 @@ class Lite
     /**
      * 数据库调试 记录当前SQL
      *
-     * @access protected
      *
-     * @param boolean $start 调试开始标记 true 开始 false 结束
+     * @param bool $start 调试开始标记 true 开始 false 结束
      */
     protected function debug($start)
     {
@@ -338,6 +337,7 @@ class Lite
      * 并显示当前的SQL语句
      *
      * @return string
+     * @throws \Think\BaseException
      */
     public function error()
     {
@@ -362,7 +362,6 @@ class Lite
     /**
      * 获得所有的查询数据
      *
-     * @access private
      * @return array
      */
     private function getResult()
@@ -378,10 +377,10 @@ class Lite
      * 执行语句
      *
      *
-     * @param string $str  sql指令
-     * @param array  $bind 参数绑定
+     * @param string $str sql指令
+     * @param array $bind 参数绑定
      *
-     * @return integer
+     * @return int
      */
     public function execute($str, $bind = [])
     {
@@ -460,7 +459,7 @@ class Lite
     /**
      * 用于非自动提交状态下面的查询提交
      *
-     * @return boolean
+     * @return bool
      */
     public function commit()
     {
@@ -480,7 +479,7 @@ class Lite
     /**
      * 事务回滚
      *
-     * @return boolean
+     * @return bool
      */
     public function rollback()
     {
@@ -501,9 +500,9 @@ class Lite
      * 获得查询次数
      *
      *
-     * @param boolean $execute 是否包含所有查询
+     * @param bool $execute 是否包含所有查询
      *
-     * @return integer
+     * @return int
      */
     public function getQueryTimes($execute = false)
     {
@@ -514,7 +513,7 @@ class Lite
     /**
      * 获得执行次数
      *
-     * @return integer
+     * @return int
      */
     public function getExecuteTimes()
     {

@@ -5,7 +5,7 @@ namespace Think;
 /**
  * ThinkPHP系统钩子实现
  */
-class Hook
+final class Hook
 {
 
     private static $tags = [];
@@ -13,8 +13,8 @@ class Hook
     /**
      * 动态添加插件到某个标签
      *
-     * @param string $tag  标签名称
-     * @param mixed  $name 插件名称
+     * @param string $tag 标签名称
+     * @param mixed $name 插件名称
      *
      * @return void
      */
@@ -33,17 +33,18 @@ class Hook
     /**
      * 批量导入插件
      *
-     * @param array   $data      插件信息
-     * @param boolean $recursive 是否递归合并
+     * @param array $data 插件信息
+     * @param bool $recursive 是否递归合并
      *
      * @return void
      */
-    public static function import($data, $recursive = true)
+    public static function import(array $data, $recursive = true)
     {
         // 覆盖导入
         if (!$recursive) {
             self::$tags = array_merge(self::$tags, $data);
-        } else { // 合并导入
+            // 合并导入
+        } else {
             foreach ($data as $tag => $val) {
                 if (!isset(self::$tags[$tag])) {
                     self::$tags[$tag] = [];
@@ -80,8 +81,8 @@ class Hook
     /**
      * 监听标签的插件
      *
-     * @param string $tag    标签名称
-     * @param mixed  $params 传入参数
+     * @param string $tag 标签名称
+     * @param mixed $params 传入参数
      *
      * @return void
      */
@@ -132,11 +133,10 @@ class Hook
     /**
      * 执行某个插件
      *
-     * @param string $name   插件名称
-     * @param string $tag    方法名（标签名）
-     * @param Mixed  $params 传入的参数
-     *
-     * @return void
+     * @param string $name 插件名称
+     * @param string $tag 方法名（标签名）
+     * @param mixed $params 传入的参数
+     * @return mixed
      */
     public static function exec($name, $tag, &$params = null)
     {

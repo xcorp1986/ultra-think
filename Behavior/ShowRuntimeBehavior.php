@@ -3,10 +3,12 @@
 
 namespace Behavior;
 
+use Think\Behavior;
+
 /**
  * 系统行为扩展：运行时间信息显示
  */
-class ShowRuntimeBehavior
+class ShowRuntimeBehavior extends Behavior
 {
 
     // 行为扩展的执行入口必须是run
@@ -35,7 +37,6 @@ class ShowRuntimeBehavior
     /**
      * 显示运行时间、数据库操作、缓存次数、内存使用信息
      *
-     * @access private
      * @return string
      */
     private function showTime()

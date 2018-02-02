@@ -11,11 +11,9 @@ class Wincache extends Cache
 {
 
     /**
-     * 构造函数
-     *
+     * Wincache constructor.
      * @param array $options 缓存参数
-     *
-
+     * @throws \Think\BaseException
      */
     public function __construct($options = [])
     {
@@ -53,9 +51,9 @@ class Wincache extends Cache
      *
      * @param string  $name   缓存变量名
      * @param mixed   $value  存储数据
-     * @param integer $expire 有效时间（秒）
+     * @param int $expire 有效时间（秒）
      *
-     * @return boolean
+     * @return bool
      */
     public function set($name, $value, $expire = null)
     {
@@ -82,7 +80,7 @@ class Wincache extends Cache
      *
      * @param string $name 缓存变量名
      *
-     * @return boolean
+     * @return bool
      */
     public function rm($name)
     {
@@ -92,7 +90,7 @@ class Wincache extends Cache
     /**
      * 清除缓存
      *
-     * @return boolean
+     * @return bool
      */
     public function clear()
     {

@@ -11,11 +11,8 @@ class Apachenote extends Cache
 {
 
     /**
-     * 构造函数
-     *
+     * Apachenote constructor.
      * @param array $options 缓存参数
-     *
-
      */
     public function __construct($options = [])
     {
@@ -41,7 +38,7 @@ class Apachenote extends Cache
     /**
      * 打开缓存
      *
-     * @access private
+     
      */
     private function open()
     {
@@ -83,7 +80,7 @@ class Apachenote extends Cache
     /**
      * 关闭缓存
      *
-     * @access private
+     
      */
     private function close()
     {
@@ -98,7 +95,7 @@ class Apachenote extends Cache
      * @param string $name  缓存变量名
      * @param mixed  $value 存储数据
      *
-     * @return boolean
+     * @return bool
      */
     public function set($name, $value)
     {
@@ -129,7 +126,7 @@ class Apachenote extends Cache
      *
      * @param string $name 缓存变量名
      *
-     * @return boolean
+     * @return bool
      */
     public function rm($name)
     {
